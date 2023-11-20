@@ -6,7 +6,7 @@
 /*   By: krfranco <krfranco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 19:02:37 by krfranco          #+#    #+#             */
-/*   Updated: 2023/11/20 23:50:34 by krfranco         ###   ########.fr       */
+/*   Updated: 2023/11/21 00:07:09 by krfranco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,24 @@ char	*get_next_line(int fd)
 {
 	int			i;
 	char		tmp[BUFFER_SIZE];
+	char		*euh;
 	static char	*keep;
 
+	tmp = txt_to_tmp(tmp, fd);
 	if !(tmp)
 		return (NULL);
+	i = 0;
 	while (tmp[i])
 	{
 		if (tmp[i] == '\n')
+		{
+			euh = ft_substr(euh, tmp, i);
+			keep = ft_substr(keep, tmp[i], BUFFER_SIZE - i);
+			break ;
+		}
 		i++;
 	}
+	return (euh);
 }
 
 int main()
@@ -47,7 +56,7 @@ int main()
 	char *str;
 
 	fd = open("t1.txt", O_RDONLY);
-	str = txt_to_tmp(fd);
+	str = get_next_line(fd);
 	printf("%s", str);
 	close(fd);
 	return (0);
