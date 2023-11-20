@@ -6,25 +6,11 @@
 /*   By: krfranco <krfranco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 19:02:34 by krfranco          #+#    #+#             */
-/*   Updated: 2023/11/20 01:24:50 by krfranco         ###   ########.fr       */
+/*   Updated: 2023/11/20 23:43:58 by krfranco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-char	*ft_strchr(const char *str, int c)
-{
-	size_t	i;
-
-	i = 0;
-	while (str[i] || !c)
-	{
-		if (str[i] == (char)c)
-			return ((char *)&str[i]);
-		i++;
-	}
-	return (NULL);
-}
 
 int	ft_strlen(char *str)
 {
