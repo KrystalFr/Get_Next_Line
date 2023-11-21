@@ -6,7 +6,7 @@
 /*   By: krfranco <krfranco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 19:02:37 by krfranco          #+#    #+#             */
-/*   Updated: 2023/11/21 20:59:50 by krfranco         ###   ########.fr       */
+/*   Updated: 2023/11/21 23:22:07 by krfranco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,18 @@ char	*get_next_line(int fd)
 	char		*line;
 	static char	keep[BUFFER_SIZE + 1];
 
-	line = malloc((BUFFER_SIZE + 1) * sizeof(char));
-	ft_bzero(line, BUFFER_SIZE + 1);
 	if (keep[0] != 0)
+	{
 		line = ft_strdup(keep);
+		if (ft_strchr(line, '\n'))
+		{
+			cleanup(line, keep);
+			return (line);
+		}
+	}
+	else
+		line = ft_strdup("");
+	ft_bzero(keep, BUFFER_SIZE + 1);
 	while (read(fd, keep, BUFFER_SIZE))
 	{
 		line = ft_strjoin(line, keep);
@@ -54,18 +62,22 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-int main(int ac, char **av)
+int	main(int ac, char **av)
 {
-	int fd;
-	int i = atoi(av[2]);
+	int		fd;
+	char	*gnl;
+	int		i;
 
 	if (ac != 3)
 		return (0);
+	i = atoi(av[2]);
 	fd = open(av[1], O_RDONLY);
 
 	while (i)
-	{	
-		printf("%s", get_next_line(fd));
+	{
+		gnl = get_next_line(fd);
+		printf("%s", gnl);
+		free(gnl);
 		i--;
 	}
 	close(fd);
