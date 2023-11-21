@@ -6,58 +6,70 @@
 /*   By: krfranco <krfranco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 19:02:37 by krfranco          #+#    #+#             */
-/*   Updated: 2023/11/21 00:07:09 by krfranco         ###   ########.fr       */
+/*   Updated: 2023/11/21 17:36:24 by krfranco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*txt_to_tmp(char *tmp, int fd)
+char	*cleanup(char *line, char *keep)
 {
-	int		i;
+	int	i;
+	int	j;
+	int	end;
 
+	j = 0;
 	i = 0;
-	while (1)
+	while (line[i] != '\n')
+		i++;
+	end = i + 1;
+	while (line[i++])
 	{
-		i = read(fd, tmp, BUFFER_SIZE);
-		if (i <= 0)
-			break ;
+		keep[j] = line[i];
+		j++;
 	}
-	return (tmp);
+	line[end] = '\0';
+	keep[j] = '\0';
+	return (line);
 }
 
 char	*get_next_line(int fd)
 {
-	int			i;
-	char		tmp[BUFFER_SIZE];
-	char		*euh;
-	static char	*keep;
+	char		*line;
+	static char	keep[BUFFER_SIZE + 1];
 
-	tmp = txt_to_tmp(tmp, fd);
-	if !(tmp)
-		return (NULL);
-	i = 0;
-	while (tmp[i])
+	line = malloc((BUFFER_SIZE + 1) * sizeof(char));
+	if (keep[0] != 0)
 	{
-		if (tmp[i] == '\n')
+		line = ft_strdup(keep);
+		ft_bzero(keep, BUFFER_SIZE + 1);
+	}
+	while (read(fd, keep, BUFFER_SIZE))
+	{
+		line = ft_strjoin(line, keep);
+		if (ft_strchr(line, '\n'))
 		{
-			euh = ft_substr(euh, tmp, i);
-			keep = ft_substr(keep, tmp[i], BUFFER_SIZE - i);
+			cleanup(line, keep);
 			break ;
 		}
-		i++;
 	}
-	return (euh);
+	return (line);
 }
 
-int main()
+int main(int ac, char **av)
 {
 	int fd;
-	char *str;
+	int i = atoi(av[2]);
 
-	fd = open("t1.txt", O_RDONLY);
-	str = get_next_line(fd);
-	printf("%s", str);
+	if (ac != 3)
+		return (0);
+	fd = open(av[1], O_RDONLY);
+
+	while (i)
+	{	
+		printf("%s", get_next_line(fd));
+		i--;
+	}
 	close(fd);
 	return (0);
 }

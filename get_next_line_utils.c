@@ -6,7 +6,7 @@
 /*   By: krfranco <krfranco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 19:02:34 by krfranco          #+#    #+#             */
-/*   Updated: 2023/11/20 23:43:58 by krfranco         ###   ########.fr       */
+/*   Updated: 2023/11/21 17:14:25 by krfranco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,23 +22,72 @@ int	ft_strlen(char *str)
 	return (i);
 }
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+void	ft_bzero(void *s, size_t n)
 {
-	char	*sub;
-	size_t	size;
+	char	*tab;
 
-	sub = NULL;
-	if (!s)
+	tab = s;
+	while (n--)
+		tab[n] = 0;
+}
+
+int	ft_strchr(char *str, char c)
+{
+	size_t	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == c)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+char	*ft_strjoin(char *s1, char *s2)
+{
+	int		i;
+	int		j;
+	int		len;
+	char	*tmp;
+
+	len = ft_strlen(s1);
+	tmp = malloc((ft_strlen(s1) + BUFFER_SIZE + 1) * sizeof(char));
+	if (!tmp)
 		return (NULL);
-	if (start > ft_strlen(s))
-		return (ft_strdup(""));
-	size = 0;
-	while (s[start + size] && size < len)
-		size++;
-	sub = malloc((size + 1) * sizeof(char));
-	if (!sub)
+	i = 0;
+	while (s1[i])
+	{
+		tmp[i] = s1[i];
+		i++;
+	}
+	j = 0;
+	while (s2[j])
+	{
+		tmp[i] = s2[j];
+		i++;
+		j++;
+	}
+	tmp[i] = '\0';
+	free(s1);
+	return (tmp);
+}
+
+char	*ft_strdup(char *src)
+{
+	int		i;
+	char	*tab;
+
+	i = 0;
+	tab = malloc((ft_strlen(src) + 1) * sizeof(char));
+	if (!tab)
 		return (NULL);
-	s += start;
-	ft_strlcpy(sub, s, size + 1);
-	return (sub);
+	while (src[i])
+	{
+		tab[i] = src[i];
+		i++;
+	}
+	tab[i] = '\0';
+	return (tab);
 }

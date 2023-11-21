@@ -6,7 +6,7 @@
 /*   By: krfranco <krfranco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 20:08:46 by krfranco          #+#    #+#             */
-/*   Updated: 2023/11/20 01:03:36 by krfranco         ###   ########.fr       */
+/*   Updated: 2023/11/21 16:47:12 by krfranco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,13 @@
 # include <fcntl.h>
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 32
+#  define BUFFER_SIZE 5
 # endif
 
+void	ft_bzero(void *s, size_t n);
 char	*get_next_line(int fd);
-void	ft_putstr(char *str);
+char	*ft_strjoin(char *s1, char *s2);
+char	*ft_strdup(char *src);
+int		ft_strlen(char *str);
+int		ft_strchr(char *str, char c);
 #endif
