@@ -6,7 +6,7 @@
 /*   By: krfranco <krfranco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 19:02:37 by krfranco          #+#    #+#             */
-/*   Updated: 2023/11/21 20:24:46 by krfranco         ###   ########.fr       */
+/*   Updated: 2023/11/21 20:30:45 by krfranco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,15 @@ char	*get_next_line(int fd)
 	line = malloc((BUFFER_SIZE + 1) * sizeof(char));
 	ft_bzero(line, BUFFER_SIZE + 1);
 	if (keep[0] != 0)
+	{
 		line = ft_strdup(keep);
+		ft_bzero(keep, BUFFER_SIZE + 1);
+	}
+	else
+		ft_bzero(keep, BUFFER_SIZE + 1);
 	while (read(fd, keep, BUFFER_SIZE))
 	{
-		while (!ft_strchr(line, '\n'))
-		{
-			line = ft_strjoin(line, keep);
-		}
+		line = ft_strjoin(line, keep);
 		if (ft_strchr(line, '\n'))
 		{
 			cleanup(line, keep);
