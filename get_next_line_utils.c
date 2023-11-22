@@ -6,7 +6,7 @@
 /*   By: krfranco <krfranco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 19:02:34 by krfranco          #+#    #+#             */
-/*   Updated: 2023/11/21 19:50:43 by krfranco         ###   ########.fr       */
+/*   Updated: 2023/11/22 17:10:01 by krfranco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,8 @@ char	*ft_strjoin(char *s1, char *s2)
 {
 	int		i;
 	int		j;
-	int		len;
 	char	*tmp;
 
-	len = ft_strlen(s1);
 	tmp = malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
 	if (!tmp)
 		return (NULL);
